@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Newsletter.Api.Database;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Newsletter.Api.Extensions;
+using Newsletter.Domain.Database;
+
+namespace Newsletter.Domain.Extensions;
 
 public static class MigrationExtensions
 {

@@ -1,13 +1,29 @@
 ﻿using Carter;
-using FluentValidation;
-using Mapster;
-using MediatR;
-using Newsletter.Api.Contracts;
-using Newsletter.Api.Database;
-using Newsletter.Api.Entities;
-using Newsletter.Api.Shared;
 
-namespace Newsletter.Api.Features.Articles;
+using FluentValidation;
+
+using Mapster;
+
+using MediatR;
+
+using Newsletter.Application.Shared;
+using Newsletter.Domain.Database;
+using Newsletter.Domain.Entities;
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace Newsletter.Application.Features.Articles;
+
+public class CreateArticleRequest
+{
+    public string Title { get; set; } = string.Empty;
+
+    public string Content { get; set; } = string.Empty;
+
+    public List<string> Tags { get; set; } = new();
+}
 
 public static class CreateArticle
 {
@@ -78,12 +94,9 @@ public class CreateArticleEndpoint : ICarterModule
 
             var result = await sender.Send(command);
 
-            if (result.IsFailure)
-            {
-                return Results.BadRequest(result.Error);
-            }
-
-            return Results.Ok(result.Value);
+            return result.IsFailure
+                ? Results.BadRequest(result.Error)
+                : Results.Ok(result.Value);
         });
     }
 }

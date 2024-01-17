@@ -1,4 +1,4 @@
-﻿namespace Newsletter.Api.Entities;
+﻿namespace Newsletter.Domain.Entities;
 
 public class Article
 {

@@ -1,4 +1,4 @@
-﻿namespace Newsletter.Api.Shared;
+﻿namespace Newsletter.Application.Shared;
 
 public class Result
 {

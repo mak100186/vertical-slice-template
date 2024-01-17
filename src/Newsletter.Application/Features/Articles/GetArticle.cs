@@ -1,11 +1,31 @@
 ﻿using Carter;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Newsletter.Api.Contracts;
-using Newsletter.Api.Database;
-using Newsletter.Api.Shared;
 
-namespace Newsletter.Api.Features.Articles;
+using MediatR;
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+
+using Newsletter.Application.Shared;
+using Newsletter.Domain.Database;
+
+namespace Newsletter.Application.Features.Articles;
+
+public class ArticleResponse
+{
+    public Guid Id { get; set; }
+
+    public string Title { get; set; } = string.Empty;
+
+    public string Content { get; set; } = string.Empty;
+
+    public List<string> Tags { get; set; } = new();
+
+    public DateTime CreatedOnUtc { get; set; }
+
+    public DateTime? PublishedOnUtc { get; set; }
+}
 
 public static class GetArticle
 {
@@ -62,12 +82,9 @@ public class GetArticleEndpoint : ICarterModule
 
             var result = await sender.Send(query);
 
-            if (result.IsFailure)
-            {
-                return Results.NotFound(result.Error);
-            }
-
-            return Results.Ok(result.Value);
+            return result.IsFailure
+                ? Results.NotFound(result.Error)
+                : Results.Ok(result.Value);
         });
     }
 }

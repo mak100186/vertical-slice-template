@@ -1,8 +1,12 @@
 using Carter;
+
 using FluentValidation;
+
 using Microsoft.EntityFrameworkCore;
-using Newsletter.Api.Database;
-using Newsletter.Api.Extensions;
+
+using Newsletter.Application;
+using Newsletter.Domain.Database;
+using Newsletter.Domain.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
 
-var assembly = typeof(Program).Assembly;
+var assembly = typeof(DependencyInjection).Assembly;
 
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(assembly));
 

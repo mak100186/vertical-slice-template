@@ -20,3 +20,12 @@ services:
     environment:
         ACCEPT_EULA: "Y"
         SA_PASSWORD: "Strong_password_123!"
+
+  newsletter-seq:
+    image: datalust/seq:latest
+    container_name: Newsletter.Seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80
